@@ -5,7 +5,19 @@ module.exports = function(grunt) {
     concat: {
       // TODO:
       dist: {
-        src: ['public/lib/*.js'],
+        src: [
+          'public/lib/underscore.js',
+          'public/lib/jquery.js',         // libraries added
+          'public/lib/backbone.js',
+          'public/lib/handlebars.js',
+          'public/client/app.js',
+          'public/client/link.js',
+          'public/client/links.js',       // mvc libraries added
+          'public/client/linkView.js',
+          'public/client/linksView.js',
+          'public/client/createLinkView.js',
+          'public/client/router.js'
+        ], 
         dest: 'public/dist/production.js'
       }
     },
@@ -28,18 +40,15 @@ module.exports = function(grunt) {
     uglify: {
 
       build: {
-        src: 'public/dist/production.js',
-        dest: 'public/dist/production.min.js'
+        files: {
+          'public/dist/production.min.js': 'public/dist/production.js',
+        }
       }
 
     },
 
     jshint: {
-      files: [
-      // ADD FILE SPEC
-      // TODO:
-      
-      ],
+      files: ['app/**/*.js', 'lib/*.js', '/public/client/*.js', '/*.js'],
       options: {
         force: 'true',
         jshintrc: '.jshintrc',
@@ -64,11 +73,12 @@ module.exports = function(grunt) {
     watch: {
       scripts: {
         files: [
-          'public/lib/*.js',
+          'public/lib/*.js', 'public/client/*.js'
         ],
         tasks: [
           'concat',
-          'uglify'
+          'uglify',
+          'jshint'
         ]
       },
       css: {
@@ -114,12 +124,13 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'concat', 'uglify', 'cssmin', 'watch'
-  ]);-
-
-  grunt.registerTask('build', [
-    'concat', 'uglify', 'cssmin'
+    'concat', 'uglify', 'cssmin', 'jshint', 'watch'
   ]);
+  
+
+  // grunt.registerTask('build', [
+  //   'concat', 'uglify', 'cssmin', 'jshint', 'watch'
+  // ]);
   
 
   grunt.registerTask('upload', function(n) {
