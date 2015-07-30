@@ -25,6 +25,7 @@ module.exports = function(grunt) {
     mochaTest: {
       test: {
         options: {
+          force: false,
           reporter: 'spec'
         },
         src: ['test/**/*.js']
@@ -38,19 +39,17 @@ module.exports = function(grunt) {
     },
 
     uglify: {
-
       build: {
         files: {
           'public/dist/production.min.js': 'public/dist/production.js',
         }
       }
-
     },
 
     jshint: {
       files: ['app/**/*.js', 'lib/*.js', '/public/client/*.js', '/*.js'],
       options: {
-        force: 'true',
+        force: false,
         jshintrc: '.jshintrc',
         ignores: [
           'public/lib/**/*.js',
@@ -60,14 +59,11 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
-      // Add filespec list here
-      // TODO:
       dist: {
         files: {
           'public/dist/style.min.css': 'public/*.css'
         }
       }
-
     },
 
     watch: {
@@ -90,7 +86,7 @@ module.exports = function(grunt) {
     shell: {
       prodServer: {
       }
-    },
+    } // deleted comma
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -120,18 +116,12 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
-    'mochaTest'
+    'jshint', 'mochaTest'
   ]);
 
-  grunt.registerTask('default', [
-    'concat', 'uglify', 'cssmin', 'jshint', 'watch'
+  grunt.registerTask('build', [
+    'concat', 'uglify', 'cssmin', 'watch'
   ]);
-  
-
-  // grunt.registerTask('build', [
-  //   'concat', 'uglify', 'cssmin', 'jshint', 'watch'
-  // ]);
-  
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
@@ -146,6 +136,6 @@ module.exports = function(grunt) {
   grunt.registerTask('deploy', [
       // TODO:
         // add your production server task here
-
+      'test', 'build'
   ]);
 };

@@ -2,6 +2,9 @@
   "name": "shortly-express",
   "version": "0.0.1",
   "description": "shortly using express",
+  "scripts": {
+    "test": "mocha test/ServerSpec.js"
+  },
   "main": "server.js",
   "repository": "",
   "license": "Proprietary",
@@ -33,6 +36,7 @@
   "devDependencies": {
     "grunt": "https://registry.npmjs.org/grunt/-/grunt-0.4.5.tgz",
     "grunt-contrib-concat": "https://registry.npmjs.org/grunt-contrib-concat/-/grunt-contrib-concat-0.3.0.tgz",
+    "grunt-mocha-test": "https://registry.npmjs.org/grunt-mocha-test/-/grunt-mocha-test-0.10.2.tgz",
     "supertest": "^0.10.0"
   }
 }
